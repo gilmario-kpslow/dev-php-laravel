@@ -1,1 +1,1 @@
-docker build -t gilmariosoftware/laravel .
+docker build -t gilmariokpslow/laravel .

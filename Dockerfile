@@ -1,7 +1,13 @@
 FROM php:7.3-alpine
 
-RUN apk add --virtual --no-cache .build-deps \
-    $PHPIZE_DEPS
+RUN apk add --virtual --no-cache \
+    $PHPIZE_DEPS \
+    curl-dev \
+    imagemagick-dev \
+    libtool \
+    libxml2-dev \
+    postgresql-dev
+
 
 RUN pecl install \
     xdebug
@@ -12,9 +18,8 @@ RUN docker-php-ext-enable \
 RUN docker-php-ext-install \
     pdo_mysql \
     pdo_pgsql \
-    tokenizer
+    tokenizer && rm -rf /var/lib/apt/lists/*
 
-RUN apk del -f .build-deps
 
 ENV COMPOSER_HOME /composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
